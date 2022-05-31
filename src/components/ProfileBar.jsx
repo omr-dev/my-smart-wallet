@@ -9,10 +9,7 @@ const ProfileBar = () => {
       {isLoading ? (
         <p>User details loading...</p>
       ) : (
-        <p>
-          {isAuthenticated && `You have as ${user.email} einlogged. `}
-          {isAuthenticated ? <BtnLogout /> : <BtnLogin />}
-        </p>
+        <p>{isAuthenticated ? <BtnLogout /> : <BtnLogin />}</p>
       )}
     </div>
   );
