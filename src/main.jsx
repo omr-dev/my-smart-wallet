@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import "./index.css";
@@ -10,6 +11,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     clientId="6u6nlonLcKY5f8Sy1tITBsxYTboyBoT7" //TODO: fix as env variable
     redirectUri={window.location.origin}
   >
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Auth0Provider>
 );
