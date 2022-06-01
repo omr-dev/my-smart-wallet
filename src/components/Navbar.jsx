@@ -12,19 +12,13 @@ const Navbar = () => {
           <li>
             <NavLink to="/home">Home</NavLink>
           </li>
-          {isLoading
-            ? "Loading..."
-            : isAuthenticated && (
-                <li>
-                  <NavLink to="/expenses">Expenses</NavLink>
-                </li>
-              )}
+          {isAuthenticated && (
+            <li>
+              <NavLink to="/expenses">Expenses</NavLink>
+            </li>
+          )}
         </ul>
-        {isLoading ? (
-          <p>User details loading...</p>
-        ) : (
-          <p>{isAuthenticated ? <BtnLogout /> : <BtnLogin />}</p>
-        )}
+        {isAuthenticated ? <BtnLogout /> : <BtnLogin />}
       </nav>
     </div>
   );
