@@ -1,22 +1,19 @@
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.scss";
-import { useAuth0 } from "@auth0/auth0-react";
-import { FaSpinner } from "react-icons/fa";
-import ProfileBar from "./components/ProfileBar";
+import Navbar from "./components/Navbar";
+import { PageHome } from "./subPages/PageHome";
+import { PageExpenses } from "./subPages/PageExpenses";
 function App() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
   return (
     <div className="App">
       <h1>My Smart Wallet</h1>
-      <ProfileBar />
-      {isLoading ? (
-        <div>
-          <FaSpinner className="spinner" />
-        </div>
-      ) : isAuthenticated ? (
-        <h2 className="loginMessageBox">{`Welcome, ${user.email} !`}</h2>
-      ) : (
-        <h2 className="loginMessageBox">Please log in to My Smart Wallet.</h2>
-      )}
+      <Navbar />
+      <Routes>
+        <Route index element={<PageHome/>} />
+        <Route path="home" element={<PageHome />} />
+        <Route path="expenses" element={<PageExpenses />} />
+        <Route path="*" element={<p>There is nothing here, 404!</p>}/>
+      </Routes>
     </div>
   );
 }
