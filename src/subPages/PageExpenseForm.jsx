@@ -2,11 +2,8 @@ import { useState } from "react";
 import { add, edit } from "../store/features/expenses/expensesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  selectExpenseToEdit,
-  sendExpenseToEdit,
-} from "../store/features/expenses/expenseToEditSlice";
-import { selectExpenses } from "../store/features/expenses/expensesSlice";
+
+import { selectExpenses,selectSelectedExpenseToEdit,setTargetExpenseToEdit } from "../store/features/expenses/expensesSlice";
 
 export const PageExpenseForm = () => {
   let isEditForm = false;
@@ -14,9 +11,9 @@ export const PageExpenseForm = () => {
   const navigate = useNavigate();
 
   const expensesInState = useSelector(selectExpenses);
-  const expenseToEdit = useSelector(selectExpenseToEdit);
+  const expenseToEdit = useSelector(selectSelectedExpenseToEdit);
   let titleToEdit, dayToEdit, amountToEdit;
-  if (expenseToEdit !== 0) {
+  if (expenseToEdit !== null) {
     isEditForm = true;
     titleToEdit = expensesInState[expenseToEdit].title;
     dayToEdit = expensesInState[expenseToEdit].day;
@@ -25,8 +22,6 @@ export const PageExpenseForm = () => {
   const [day, setDay] = useState(dayToEdit ? dayToEdit : 1);
   const [title, setTitle] = useState(titleToEdit ? titleToEdit : "");
   const [amount, setAmount] = useState(amountToEdit ? amountToEdit : 1);
-
-  
 
   return (
     <div className="page-expense-form">
@@ -91,7 +86,7 @@ export const PageExpenseForm = () => {
                       },
                     })
                   );
-                  dispatch(sendExpenseToEdit(0));
+                  dispatch(setTargetExpenseToEdit(null));
                 } else {
                   dispatch(add({ title: title, amount: amount, day: day }));
                 }
@@ -104,7 +99,7 @@ export const PageExpenseForm = () => {
               className="btn-cancel"
               onClick={() => {
                 if (isEditForm) {
-                  dispatch(sendExpenseToEdit(0));
+                  dispatch((setTargetExpenseToEdit(null)));
                 }
                 navigate("/expenses");
               }}

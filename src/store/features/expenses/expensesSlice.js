@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 export const expensesSlice = createSlice({
   name: "expenses",
-  initialState: { value: { nextIndex: 1, data: {} } },
+  initialState: {
+    value: { nextIndex: 1, selectedExpenseToEdit: null, data: {} },
+  },
   reducers: {
     add: (state, action) => {
       const newExpense = action.payload;
@@ -12,10 +14,21 @@ export const expensesSlice = createSlice({
       const targetExpense = action.payload.targetId;
       state.value.data[targetExpense] = action.payload.newValue;
     },
+    setTargetExpenseToEdit: (state, action) => {
+      const selectedExpense = action.payload;
+      state.value.selectedExpenseToEdit = selectedExpense;
+    },
   },
 });
-export const { add, edit } = expensesSlice.actions;
+export const {
+  add,
+  edit,
+  setTargetExpenseToEdit,
+} = expensesSlice.actions;
 export const selectExpenses = (state) => {
   return state.expenses.value.data;
+};
+export const selectSelectedExpenseToEdit = (state) => {
+  return state.expenses.value.selectedExpenseToEdit;
 };
 export default expensesSlice.reducer;

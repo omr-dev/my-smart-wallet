@@ -1,7 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectExpenses } from "../store/features/expenses/expensesSlice";
-import { sendExpenseToEdit } from "../store/features/expenses/expenseToEditSlice";
+import {
+  selectExpenses,
+  setTargetExpenseToEdit,
+} from "../store/features/expenses/expensesSlice";
 
 export const ExpensesList = () => {
   const expensesInState = useSelector(selectExpenses);
@@ -12,10 +14,12 @@ export const ExpensesList = () => {
     <div className="expensesList">
       <table className="expensesTable">
         <thead>
-          <td>DAY</td>
-          <td>TITLE</td>
-          <td>AMOUNT</td>
-          <td>ACTIONS</td>
+          <tr>
+            <th>DAY</th>
+            <th>TITLE</th>
+            <th>AMOUNT</th>
+            <th>ACTIONS</th>
+          </tr>
         </thead>
         <tbody>
           {Object.keys(expensesInState).map((expenseKey) => {
@@ -27,12 +31,12 @@ export const ExpensesList = () => {
                 <td>
                   <button
                     onClick={() => {
-                      dispatch(sendExpenseToEdit(expenseKey));
+                      dispatch(setTargetExpenseToEdit(expenseKey));
                       navigate("/expenseForm");
                     }}
                   >
                     EDIT
-                  </button>{" "}
+                  </button>
                   <button>DELETE</button>
                 </td>
               </tr>

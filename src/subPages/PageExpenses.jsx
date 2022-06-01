@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const PageExpenses = () => {
   const expensesInState = useSelector(selectExpenses);
   const countOfExpenses = Object.keys(expensesInState).length;
-  console.log(countOfExpenses);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading } = useAuth0();
