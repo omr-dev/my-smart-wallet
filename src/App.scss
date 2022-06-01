@@ -1,10 +1,28 @@
+:root{
+  font-size: 62.5%;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body{
   background-color: #333;
   color:#ccc;
   padding: 10px;
+  font-size:1.6rem;
   .App{
+    width:80%;
+    margin: 0 auto;
+    h1.AppTitle{
+      margin: 20px;
+      text-align: center;
+      color:yellow;
+    }
     .navbar{
       background-color: black;
+      border-radius:10px;
 
       .navbar-inner{
         width: 80%;
@@ -13,7 +31,6 @@ body{
       padding: 10px;
       justify-content: space-between;
       gap: 20px;
-      border-radius:10px;
       ul{
         list-style-type: none;
         display:flex;
@@ -42,6 +59,33 @@ body{
         
       }
     }
+  }
+  .subPage{
+    width: 80%;
+    margin: 0 auto;
+    padding:20px;
+  }
+  .pageExpenses{
+    .expensesList{
+      table{
+        width: 100%;
+        thead{
+          background-color:#ccc;
+          color:#333;
+          th{
+            padding: 10px;
+          }
+          
+        }
+        tbody{
+          td{
+            text-align: center;
+            padding:5px;
+          }
+        }
+      }
+    }
+
   }
     .loginMessageBox{
       text-align: center;

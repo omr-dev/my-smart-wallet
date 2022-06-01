@@ -6,7 +6,7 @@ import { PageExpenses } from "./subPages/PageExpenses";
 function App() {
   return (
     <div className="App">
-      <h1>My Smart Wallet</h1>
+      <h1 className="AppTitle">My Smart Wallet</h1>
       <Navbar />
       <Routes>
         <Route index element={<PageHome/>} />
