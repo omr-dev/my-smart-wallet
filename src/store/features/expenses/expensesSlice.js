@@ -18,13 +18,14 @@ export const expensesSlice = createSlice({
       const selectedExpense = action.payload;
       state.value.selectedExpenseToEdit = selectedExpense;
     },
+    deleteExpense: (state, action) => {
+      const selectedExpenseToDelete = action.payload;
+      delete state.value.data[selectedExpenseToDelete];
+    },
   },
 });
-export const {
-  add,
-  edit,
-  setTargetExpenseToEdit,
-} = expensesSlice.actions;
+export const { add, edit, deleteExpense, setTargetExpenseToEdit } =
+  expensesSlice.actions;
 export const selectExpenses = (state) => {
   return state.expenses.value.data;
 };

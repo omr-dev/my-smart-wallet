@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   selectExpenses,
   setTargetExpenseToEdit,
+  deleteExpense,
 } from "../store/features/expenses/expensesSlice";
 
 export const ExpensesList = () => {
@@ -23,11 +24,14 @@ export const ExpensesList = () => {
         </thead>
         <tbody>
           {Object.keys(expensesInState).map((expenseKey) => {
+            const title = expensesInState[expenseKey].title;
+            const day = expensesInState[expenseKey].day;
+            const amount = expensesInState[expenseKey].amount;
             return (
               <tr key={expenseKey}>
-                <td>{expensesInState[expenseKey].day}</td>
-                <td>{expensesInState[expenseKey].title}</td>
-                <td>{expensesInState[expenseKey].amount}</td>
+                <td>{day}</td>
+                <td>{title}</td>
+                <td>{amount}</td>
                 <td>
                   <button
                     onClick={() => {
@@ -37,7 +41,14 @@ export const ExpensesList = () => {
                   >
                     EDIT
                   </button>
-                  <button>DELETE</button>
+                  <button
+                    onClick={() => {
+                      if (confirm(`Are you sure you want to delete ${title} ?`))
+                        dispatch(deleteExpense(expenseKey));
+                    }}
+                  >
+                    DELETE
+                  </button>
                 </td>
               </tr>
             );
