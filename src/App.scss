@@ -2,4 +2,26 @@ body{
   background-color: #333;
   color:#ccc;
   padding: 10px;
+  .App{
+    .profileBar{
+      display:flex;
+      background-color: black;
+      padding: 10px;
+      justify-content: flex-end;
+      gap: 20px;
+      border-radius:10px;
+      button{
+        padding: 10px;
+        
+      }
+    }
+    .loginMessageBox{
+      text-align: center;
+      background-color:black;
+      width: fit-content;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius:10px;
+    }
+  }
 }
