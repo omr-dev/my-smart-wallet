@@ -1,17 +1,36 @@
 import { useState } from "react";
-import { add } from "../store/features/expenses/expensesSlice";
-import { useDispatch } from "react-redux";
+import { add, edit } from "../store/features/expenses/expensesSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  selectExpenseToEdit,
+  sendExpenseToEdit,
+} from "../store/features/expenses/expenseToEditSlice";
+import { selectExpenses } from "../store/features/expenses/expensesSlice";
 
 export const PageExpenseForm = () => {
-  const [day, setDay] = useState(1);
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState(1);
+  let isEditForm = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const expensesInState = useSelector(selectExpenses);
+  const expenseToEdit = useSelector(selectExpenseToEdit);
+  let titleToEdit, dayToEdit, amountToEdit;
+  if (expenseToEdit !== 0) {
+    isEditForm = true;
+    titleToEdit = expensesInState[expenseToEdit].title;
+    dayToEdit = expensesInState[expenseToEdit].day;
+    amountToEdit = expensesInState[expenseToEdit].amount;
+  }
+  const [day, setDay] = useState(dayToEdit ? dayToEdit : 1);
+  const [title, setTitle] = useState(titleToEdit ? titleToEdit : "");
+  const [amount, setAmount] = useState(amountToEdit ? amountToEdit : 1);
+
+  
+
   return (
     <div className="page-expense-form">
-      <h2>Add Expense</h2>
+      <h2>{isEditForm ? "Edit" : "Add"} Expense</h2>
 
       <form
         onSubmit={(e) => {
@@ -61,7 +80,21 @@ export const PageExpenseForm = () => {
               type="submit"
               className="btn-submit"
               onClick={() => {
-                dispatch(add({ title: title, amount: amount, day: day }));
+                if (isEditForm) {
+                  dispatch(
+                    edit({
+                      targetId: expenseToEdit,
+                      newValue: {
+                        title: title,
+                        amount: amount,
+                        day: day,
+                      },
+                    })
+                  );
+                  dispatch(sendExpenseToEdit(0));
+                } else {
+                  dispatch(add({ title: title, amount: amount, day: day }));
+                }
                 navigate("/expenses");
               }}
             >
@@ -70,6 +103,9 @@ export const PageExpenseForm = () => {
             <button
               className="btn-cancel"
               onClick={() => {
+                if (isEditForm) {
+                  dispatch(sendExpenseToEdit(0));
+                }
                 navigate("/expenses");
               }}
             >

@@ -8,9 +8,13 @@ export const expensesSlice = createSlice({
       state.value.data[state.value.nextIndex] = newExpense;
       state.value.nextIndex += 1;
     }, //TODO: add EDIT,REMOVE reducers
+    edit: (state, action) => {
+      const targetExpense = action.payload.targetId;
+      state.value.data[targetExpense] = action.payload.newValue;
+    },
   },
 });
-export const { add } = expensesSlice.actions;
+export const { add, edit } = expensesSlice.actions;
 export const selectExpenses = (state) => {
   return state.expenses.value.data;
 };
