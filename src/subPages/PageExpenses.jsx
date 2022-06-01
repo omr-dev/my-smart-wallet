@@ -4,12 +4,14 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { add, selectExpenses } from "../store/features/expenses/expensesSlice";
 import { ExpensesList } from "../components/ExpensesList";
+import { useNavigate } from "react-router-dom";
 
 export const PageExpenses = () => {
   const expensesInState = useSelector(selectExpenses);
   const countOfExpenses = Object.keys(expensesInState).length;
   console.log(countOfExpenses);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user, isAuthenticated, isLoading } = useAuth0();
   if (!isLoading) {
     if (!isAuthenticated) {
@@ -18,11 +20,16 @@ export const PageExpenses = () => {
       return (
         <div className="pageExpenses subPage">
           <h2>This is expenses page.</h2>
+
           <button
-            onClick={() => dispatch(add({ title: "fuel", amount: 20, day: 1 }))}
+            className="btn-add-expense"
+            onClick={() => {
+              navigate("/expenseForm");
+            }}
           >
             Add Expense
           </button>
+
           {countOfExpenses > 0 && <ExpensesList />}
         </div>
       );

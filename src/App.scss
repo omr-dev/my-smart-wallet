@@ -1,99 +1,144 @@
-:root{
+:root {
   font-size: 62.5%;
 }
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   background-color: #333;
-  color:#ccc;
+  color: #ccc;
   padding: 10px;
-  font-size:1.6rem;
-  .App{
-    width:80%;
-    margin: 0 auto;
-    h1.AppTitle{
-      margin: 20px;
-      text-align: center;
-      color:yellow;
-    }
-    .navbar{
-      background-color: black;
-      border-radius:10px;
-
-      .navbar-inner{
-        width: 80%;
-        margin:0 auto;
-      display:flex;
-      padding: 10px;
-      justify-content: space-between;
-      gap: 20px;
-      ul{
-        list-style-type: none;
-        display:flex;
-        align-items: center;
-        gap:20px;
-        li{
-
-          a{
-            text-decoration: none;
-            color:#ccc;
-            padding: 10px;
-            border:1px solid #ccc;
-            &:hover{
-              background-color:#ccc;
-              color:#333;
-            }
-            &.active{
-              color:yellow;
-              border-color: yellow;
-            }
-          }
-        }
-      }
-      button{
-        padding: 10px;
-        
-      }
-    }
-  }
-  .subPage{
+  font-size: 1.6rem;
+  .App {
     width: 80%;
     margin: 0 auto;
-    padding:20px;
-  }
-  .pageExpenses{
-    .expensesList{
-      table{
-        width: 100%;
-        thead{
-          background-color:#ccc;
-          color:#333;
-          th{
-            padding: 10px;
+    h1.AppTitle {
+      margin: 20px;
+      text-align: center;
+      color: yellow;
+    }
+    .navbar {
+      background-color: black;
+      border-radius: 10px;
+
+      .navbar-inner {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        gap: 20px;
+        ul {
+          list-style-type: none;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          li {
+            a {
+              text-decoration: none;
+              color: #ccc;
+              padding: 10px;
+              border: 1px solid #ccc;
+              &:hover {
+                background-color: #ccc;
+                color: #333;
+              }
+              &.active {
+                color: yellow;
+                border-color: yellow;
+              }
+            }
           }
-          
         }
-        tbody{
-          td{
-            text-align: center;
-            padding:5px;
+        button {
+          padding: 10px;
+        }
+      }
+    }
+    .subPage {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .pageExpenses {
+      .btn-add-expense {
+        width: fit-content;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 10px;
+        a {
+          text-decoration: none;
+          color: #ccc;
+          &:hover {
+            color: #333;
+            background-color: #ccc;
+          }
+        }
+        &:hover {
+          background-color: #ccc;
+          a {
+            color: #333;
+          }
+        }
+      }
+      .expensesList {
+        table {
+          width: 100%;
+          thead {
+            background-color: #ccc;
+            color: #333;
+            th {
+              padding: 10px;
+            }
+          }
+          tbody {
+            td {
+              text-align: center;
+              padding: 5px;
+            }
           }
         }
       }
     }
-
-  }
-    .loginMessageBox{
+    .page-expense-form {
+      h2 {
+        padding: 20px 0;
+        text-align: center;
+      }
+      .form-container {
+        border: 1px solid #ccc;
+        width: min-content;
+        margin: 0 auto;
+        padding: 20px;
+        .form-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px;
+          gap: 10px;
+          input {
+            padding: 5px;
+            width: 200px;
+          }
+          input[type="number"] {
+            width: 100px;
+          }
+          button{
+            padding: 10px;
+          }
+        }
+      }
+    }
+    .loginMessageBox {
       text-align: center;
-      background-color:black;
+      background-color: black;
       width: fit-content;
       margin: 20px auto;
       padding: 20px;
-      border-radius:10px;
+      border-radius: 10px;
     }
   }
 }
