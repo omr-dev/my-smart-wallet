@@ -19,16 +19,18 @@ export const PageTransactionForm = () => {
 
   const transactionsInState = useSelector(getTransactions);
   const transactionToEdit = useSelector(getMarkedTransactionToEdit);
-  let titleToEdit, dayToEdit, amountToEdit;
+  let titleToEdit, dayToEdit, amountToEdit, typeToEdit;
   if (transactionToEdit !== null) {
     isEditForm = true;
     titleToEdit = transactionsInState[transactionToEdit].title;
     dayToEdit = transactionsInState[transactionToEdit].day;
     amountToEdit = transactionsInState[transactionToEdit].amount;
+    typeToEdit = transactionsInState[transactionToEdit].type;
   }
-  const [day, setDay] = useState(dayToEdit ? dayToEdit : 1);
+  const [day, setDay] = useState(dayToEdit ? dayToEdit : "");
   const [title, setTitle] = useState(titleToEdit ? titleToEdit : "");
-  const [amount, setAmount] = useState(amountToEdit ? amountToEdit : 1);
+  const [amount, setAmount] = useState(amountToEdit ? amountToEdit : "");
+  const [type, setType] = useState(typeToEdit ? typeToEdit : "expense");
 
   return (
     <div className="page-transaction-form">
@@ -37,9 +39,50 @@ export const PageTransactionForm = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (isEditForm) {
+            dispatch(
+              editTransaction({
+                targetId: transactionToEdit,
+                newValue: {
+                  type: type,
+                  title: title,
+                  amount: amount,
+                  day: day,
+                },
+              })
+            );
+            dispatch(markTransactionToEdit(null));
+          } else {
+            dispatch(
+              addTransaction({
+                type: type,
+                title: title,
+                amount: amount,
+                day: day,
+              })
+            );
+          }
+          navigate("/transactions");
         }}
       >
-        <div className="form-container">
+        <div
+          className="form-container"
+          style={{
+            borderColor: type === "expense" ? "red" : "green",
+          }}
+        >
+          <div className="form-row ">
+            <label htmlFor="type">Type:</label>
+            <select
+              value={type}
+              onChange={(e) => {
+                setType(e.target.value);
+              }}
+            >
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
           <div className="form-row">
             <label htmlFor="title">Title:</label>
             <input
@@ -49,6 +92,7 @@ export const PageTransactionForm = () => {
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
+              required
             />
           </div>
           <div className="form-row">
@@ -62,6 +106,7 @@ export const PageTransactionForm = () => {
               onChange={(e) => {
                 setDay(e.target.value);
               }}
+              required
             />
           </div>
 
@@ -75,31 +120,11 @@ export const PageTransactionForm = () => {
               onChange={(e) => {
                 setAmount(e.target.value);
               }}
+              required
             />
           </div>
           <div className="form-row">
-            <button
-              type="submit"
-              className="btn-submit"
-              onClick={() => {
-                if (isEditForm) {
-                  dispatch(
-                    editTransaction({
-                      targetId: transactionToEdit,
-                      newValue: {
-                        title: title,
-                        amount: amount,
-                        day: day,
-                      },
-                    })
-                  );
-                  dispatch(markTransactionToEdit(null));
-                } else {
-                  dispatch(addTransaction({ title: title, amount: amount, day: day }));
-                }
-                navigate("/transactions");
-              }}
-            >
+            <button type="submit" className="btn-submit">
               Submit
             </button>
             <button

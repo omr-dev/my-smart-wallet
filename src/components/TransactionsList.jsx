@@ -27,11 +27,16 @@ export const TransactionsList = () => {
             const title = transactionsInState[transactionKey].title;
             const day = transactionsInState[transactionKey].day;
             const amount = transactionsInState[transactionKey].amount;
+            const type = transactionsInState[transactionKey].type;
+
             return (
               <tr key={transactionKey}>
                 <td>{day}</td>
                 <td>{title}</td>
-                <td>{amount}</td>
+                <td className={`amountCell ${type === "expense" ? "redText " : "greenText "}`}>
+                  {type === "expense" ? "- " : "+ "}
+                  {amount} €
+                </td>
                 <td>
                   <button
                     onClick={() => {

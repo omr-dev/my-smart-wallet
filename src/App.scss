@@ -69,7 +69,6 @@ body {
         border: 1px solid #ccc;
         padding: 10px;
         margin: 10px;
-        
       }
       .transactionsList {
         table {
@@ -85,6 +84,15 @@ body {
             td {
               text-align: center;
               padding: 5px;
+              &.amountCell{
+                text-align: right;
+              }
+              &.redText {
+                color: red;
+              }
+              &.greenText {
+                color: green;
+              }
             }
           }
         }
@@ -96,7 +104,8 @@ body {
         text-align: center;
       }
       .form-container {
-        border: 1px solid #ccc;
+        border: 5px solid #ccc;
+        border-radius: 10px;
         width: min-content;
         margin: 0 auto;
         padding: 20px;
@@ -106,6 +115,9 @@ body {
           align-items: center;
           padding: 10px;
           gap: 10px;
+          select {
+            padding: 5px;
+          }
           input {
             padding: 5px;
             width: 200px;
@@ -113,7 +125,7 @@ body {
           input[type="number"] {
             width: 100px;
           }
-          button{
+          button {
             padding: 10px;
           }
         }
