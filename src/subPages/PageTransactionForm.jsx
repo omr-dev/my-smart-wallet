@@ -44,6 +44,7 @@ export const PageTransactionForm = () => {
               editTransaction({
                 targetId: transactionToEdit,
                 newValue: {
+                  type: type,
                   title: title,
                   amount: amount,
                   day: day,
