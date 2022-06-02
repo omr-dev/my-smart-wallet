@@ -8,11 +8,19 @@ import {
 
 export const TransactionsList = () => {
   const transactionsInState = useSelector(getTransactions);
+  const balance = getBalance(transactionsInState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   return (
     <div className="transactionsList">
+      <h3>
+        Balance :{" "}
+        <span className={balance > 0 ? "greenText" : "redText"}>
+          {balance > 0 && "+"}
+          {balance} €
+        </span>
+      </h3>
       <table className="transactionsTable">
         <thead>
           <tr>
@@ -33,7 +41,11 @@ export const TransactionsList = () => {
               <tr key={transactionKey}>
                 <td>{day}</td>
                 <td>{title}</td>
-                <td className={`amountCell ${type === "expense" ? "redText " : "greenText "}`}>
+                <td
+                  className={`amountCell ${
+                    type === "expense" ? "redText " : "greenText "
+                  }`}
+                >
                   {type === "expense" ? "- " : "+ "}
                   {amount} €
                 </td>
@@ -63,3 +75,12 @@ export const TransactionsList = () => {
     </div>
   );
 };
+function getBalance(transactions) {
+  let balance = 0;
+  Object.keys(transactions).forEach((key) => {
+    let amount = Number(transactions[key].amount);
+    if (transactions[key].type === "expense") amount *= -1;
+    balance += amount;
+  });
+  return balance;
+}
