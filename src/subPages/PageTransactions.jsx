@@ -22,12 +22,12 @@ export const PageTransactions = () => {
           <h2>This is tranactions page.</h2>
 
           <button
-            className="btn-add-expense"
+            className="btn-add-transaction"
             onClick={() => {
               navigate("/transactionForm");
             }}
           >
-            Add Expense
+            Add Transaction
           </button>
 
           {countOfTransactions > 0 && <TransactionsList />}
