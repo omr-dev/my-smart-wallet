@@ -1,31 +1,38 @@
 import { useState } from "react";
-import { add, edit } from "../store/features/expenses/expensesSlice";
+import {
+  addTransaction,
+  editTransaction,
+} from "../store/features/transactions/transactionsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { selectExpenses,selectSelectedExpenseToEdit,setTargetExpenseToEdit } from "../store/features/expenses/expensesSlice";
+import {
+  getTransactions,
+  getMarkedTransactionToEdit,
+  markTransactionToEdit,
+} from "../store/features/transactions/transactionsSlice";
 
-export const PageExpenseForm = () => {
+export const PageTransactionForm = () => {
   let isEditForm = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const expensesInState = useSelector(selectExpenses);
-  const expenseToEdit = useSelector(selectSelectedExpenseToEdit);
+  const transactionsInState = useSelector(getTransactions);
+  const transactionToEdit = useSelector(getMarkedTransactionToEdit);
   let titleToEdit, dayToEdit, amountToEdit;
-  if (expenseToEdit !== null) {
+  if (transactionToEdit !== null) {
     isEditForm = true;
-    titleToEdit = expensesInState[expenseToEdit].title;
-    dayToEdit = expensesInState[expenseToEdit].day;
-    amountToEdit = expensesInState[expenseToEdit].amount;
+    titleToEdit = transactionsInState[transactionToEdit].title;
+    dayToEdit = transactionsInState[transactionToEdit].day;
+    amountToEdit = transactionsInState[transactionToEdit].amount;
   }
   const [day, setDay] = useState(dayToEdit ? dayToEdit : 1);
   const [title, setTitle] = useState(titleToEdit ? titleToEdit : "");
   const [amount, setAmount] = useState(amountToEdit ? amountToEdit : 1);
 
   return (
-    <div className="page-expense-form">
-      <h2>{isEditForm ? "Edit" : "Add"} Expense</h2>
+    <div className="page-transaction-form">
+      <h2>{isEditForm ? "Edit" : "Add"} Transaction</h2>
 
       <form
         onSubmit={(e) => {
@@ -77,8 +84,8 @@ export const PageExpenseForm = () => {
               onClick={() => {
                 if (isEditForm) {
                   dispatch(
-                    edit({
-                      targetId: expenseToEdit,
+                    editTransaction({
+                      targetId: transactionToEdit,
                       newValue: {
                         title: title,
                         amount: amount,
@@ -86,11 +93,11 @@ export const PageExpenseForm = () => {
                       },
                     })
                   );
-                  dispatch(setTargetExpenseToEdit(null));
+                  dispatch(markTransactionToEdit(null));
                 } else {
-                  dispatch(add({ title: title, amount: amount, day: day }));
+                  dispatch(addTransaction({ title: title, amount: amount, day: day }));
                 }
-                navigate("/expenses");
+                navigate("/transactions");
               }}
             >
               Submit
@@ -99,9 +106,9 @@ export const PageExpenseForm = () => {
               className="btn-cancel"
               onClick={() => {
                 if (isEditForm) {
-                  dispatch((setTargetExpenseToEdit(null)));
+                  dispatch(markTransactionToEdit(null));
                 }
-                navigate("/expenses");
+                navigate("/transactions");
               }}
             >
               Cancel

@@ -63,28 +63,15 @@ body {
       margin: 0 auto;
       padding: 20px;
     }
-    .pageExpenses {
+    .pageTransactions {
       .btn-add-expense {
         width: fit-content;
         border: 1px solid #ccc;
         padding: 10px;
         margin: 10px;
-        a {
-          text-decoration: none;
-          color: #ccc;
-          &:hover {
-            color: #333;
-            background-color: #ccc;
-          }
-        }
-        &:hover {
-          background-color: #ccc;
-          a {
-            color: #333;
-          }
-        }
+        
       }
-      .expensesList {
+      .transactionsList {
         table {
           width: 100%;
           thead {
@@ -103,7 +90,7 @@ body {
         }
       }
     }
-    .page-expense-form {
+    .page-transaction-form {
       h2 {
         padding: 20px 0;
         text-align: center;

@@ -14,7 +14,7 @@ const Navbar = () => {
           </li>
           {isAuthenticated && (
             <li>
-              <NavLink to="/expenses">Expenses</NavLink>
+              <NavLink to="/transactions">Transactions</NavLink>
             </li>
           )}
         </ul>
