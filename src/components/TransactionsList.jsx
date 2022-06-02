@@ -1,19 +1,19 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  selectExpenses,
-  setTargetExpenseToEdit,
-  deleteExpense,
-} from "../store/features/expenses/expensesSlice";
+  getTransactions,
+  markTransactionToEdit,
+  deleteTransaction,
+} from "../store/features/transactions/transactionsSlice";
 
-export const ExpensesList = () => {
-  const expensesInState = useSelector(selectExpenses);
+export const TransactionsList = () => {
+  const transactionsInState = useSelector(getTransactions);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   return (
-    <div className="expensesList">
-      <table className="expensesTable">
+    <div className="transactionsList">
+      <table className="transactionsTable">
         <thead>
           <tr>
             <th>DAY</th>
@@ -23,20 +23,20 @@ export const ExpensesList = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(expensesInState).map((expenseKey) => {
-            const title = expensesInState[expenseKey].title;
-            const day = expensesInState[expenseKey].day;
-            const amount = expensesInState[expenseKey].amount;
+          {Object.keys(transactionsInState).map((transactionKey) => {
+            const title = transactionsInState[transactionKey].title;
+            const day = transactionsInState[transactionKey].day;
+            const amount = transactionsInState[transactionKey].amount;
             return (
-              <tr key={expenseKey}>
+              <tr key={transactionKey}>
                 <td>{day}</td>
                 <td>{title}</td>
                 <td>{amount}</td>
                 <td>
                   <button
                     onClick={() => {
-                      dispatch(setTargetExpenseToEdit(expenseKey));
-                      navigate("/expenseForm");
+                      dispatch(markTransactionToEdit(transactionKey));
+                      navigate("/transactionForm");
                     }}
                   >
                     EDIT
@@ -44,7 +44,7 @@ export const ExpensesList = () => {
                   <button
                     onClick={() => {
                       if (confirm(`Are you sure you want to delete ${title} ?`))
-                        dispatch(deleteExpense(expenseKey));
+                        dispatch(deleteTransaction(transactionKey));
                     }}
                   >
                     DELETE

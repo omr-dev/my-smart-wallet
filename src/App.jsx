@@ -1,9 +1,9 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.scss";
 import Navbar from "./components/Navbar";
 import { PageHome } from "./subPages/PageHome";
-import { PageExpenses } from "./subPages/PageExpenses";
-import {PageExpenseForm} from './subPages/PageExpenseForm';
+import { PageTransactions } from "./subPages/PageTransactions";
+import { PageTransactionForm } from './subPages/PageTransactionForm';
 function App() {
   return (
     <div className="App">
@@ -12,8 +12,8 @@ function App() {
       <Routes>
         <Route index element={<PageHome/>} />
         <Route path="home" element={<PageHome />} />
-        <Route path="expenses" element={<PageExpenses />} />
-        <Route path="expenseForm" element={<PageExpenseForm/>} />
+        <Route path="transactions" element={<PageTransactions />} />
+        <Route path="transactionForm" element={<PageTransactionForm/>} />
         <Route path="*" element={<p>There is nothing here, 404!</p>}/>
       </Routes>
     </div>
