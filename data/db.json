@@ -1,0 +1,28 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "user": "sanane@gmail.com",
+            "type": "expense",
+            "title": "apple",
+            "amount": 100,
+            "day": 21
+        },
+        {
+            "id": 2,
+            "user": "sanane@gmail.com",
+            "type": "expense",
+            "title": "lemon",
+            "amount": 10,
+            "day": 1
+        },
+        {
+            "id": 3,
+            "user": "sanane@gmail.com",
+            "type": "income",
+            "title": "salary",
+            "amount": 1000,
+            "day": 1
+        }
+    ]
+}
