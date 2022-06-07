@@ -2,15 +2,17 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { FaSpinner } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getTransactions } from "../store/features/transactions/transactionsSlice";
+
 import { TransactionsList } from "../components/TransactionsList";
 import { useNavigate } from "react-router-dom";
 
-export const PageTransactions = () => {
-  const transactionsInState = useSelector(getTransactions);
-  const countOfTransactions = Object.keys(transactionsInState).length;
 
-  
+export const PageTransactions = () => {
+  const transactionsInState = useSelector((state) => state.transactions);
+  let countOfTransactions = transactionsInState.length;
+
+ 
+
   const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useAuth0();
   if (!isLoading) {
@@ -19,7 +21,7 @@ export const PageTransactions = () => {
     } else {
       return (
         <div className="pageTransactions subPage">
-          <h2>This is tranactions page.</h2>
+          <h2>This is transactions page.</h2>
 
           <button
             className="btn-add-transaction"
@@ -30,7 +32,7 @@ export const PageTransactions = () => {
             Add Transaction
           </button>
 
-          {countOfTransactions > 0 && <TransactionsList />}
+          {countOfTransactions > 0 ? <TransactionsList />:<p>There are no transactions.</p>}
         </div>
       );
     }
@@ -42,3 +44,7 @@ export const PageTransactions = () => {
     );
   }
 };
+
+
+
+

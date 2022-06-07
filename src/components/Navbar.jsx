@@ -1,3 +1,5 @@
+//TODO: show home active at boot
+//TODO: add private routing
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
 import BtnLogin from "./BtnLogin";

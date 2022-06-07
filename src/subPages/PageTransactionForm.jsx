@@ -1,67 +1,29 @@
 import { useState } from "react";
-import {
-  addTransaction,
-  editTransaction,
-} from "../store/features/transactions/transactionsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
-import {
-  getTransactions,
-  getMarkedTransactionToEdit,
-  markTransactionToEdit,
-} from "../store/features/transactions/transactionsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const PageTransactionForm = () => {
-  let isEditForm = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const transactionsInState = useSelector(getTransactions);
-  const transactionToEdit = useSelector(getMarkedTransactionToEdit);
-  let titleToEdit, dayToEdit, amountToEdit, typeToEdit;
-  if (transactionToEdit !== null) {
-    isEditForm = true;
-    titleToEdit = transactionsInState[transactionToEdit].title;
-    dayToEdit = transactionsInState[transactionToEdit].day;
-    amountToEdit = transactionsInState[transactionToEdit].amount;
-    typeToEdit = transactionsInState[transactionToEdit].type;
-  }
-  const [day, setDay] = useState(dayToEdit ? dayToEdit : "");
-  const [title, setTitle] = useState(titleToEdit ? titleToEdit : "");
-  const [amount, setAmount] = useState(amountToEdit ? amountToEdit : "");
-  const [type, setType] = useState(typeToEdit ? typeToEdit : "expense");
+  const [day, setDay] = useState();
+  const [title, setTitle] = useState();
+  const [amount, setAmount] = useState();
+  const [type, setType] = useState("expense");
 
   return (
     <div className="page-transaction-form">
-      <h2>{isEditForm ? "Edit" : "Add"} Transaction</h2>
+      <h2>Add Transaction</h2>
 
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (isEditForm) {
-            dispatch(
-              editTransaction({
-                targetId: transactionToEdit,
-                newValue: {
-                  type: type,
-                  title: title,
-                  amount: amount,
-                  day: day,
-                },
-              })
-            );
-            dispatch(markTransactionToEdit(null));
-          } else {
-            dispatch(
-              addTransaction({
-                type: type,
-                title: title,
-                amount: amount,
-                day: day,
-              })
-            );
-          }
+
+          dispatch({
+            type: "transactions/transactionAdded",
+            payload: { type: type, title: title, amount: amount, day: day },
+          });
           navigate("/transactions");
         }}
       >
@@ -130,9 +92,6 @@ export const PageTransactionForm = () => {
             <button
               className="btn-cancel"
               onClick={() => {
-                if (isEditForm) {
-                  dispatch(markTransactionToEdit(null));
-                }
                 navigate("/transactions");
               }}
             >
