@@ -43,6 +43,11 @@ export const TransactionsList = () => {
                   <button
                     onClick={() => {
                       //TODO: create editable form
+                      dispatch({
+                        type: "edition/selectToEdit",
+                        payload: transaction,
+                      });
+                      navigate("/transactionForm");
                     }}
                   >
                     EDIT

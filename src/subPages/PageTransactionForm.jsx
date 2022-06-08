@@ -6,24 +6,47 @@ import { useNavigate, useParams } from "react-router-dom";
 export const PageTransactionForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const recordToEditInState = useSelector((state) => state.transactionToEdit);
+  const isEditForm = recordToEditInState.hasRecordToEdit;
+  console.log("isEditForm", isEditForm);
 
-  const [day, setDay] = useState();
-  const [title, setTitle] = useState();
-  const [amount, setAmount] = useState();
-  const [type, setType] = useState("expense");
+  const [day, setDay] = useState(isEditForm ? recordToEditInState.day : "");
+  const [title, setTitle] = useState(
+    isEditForm ? recordToEditInState.title : ""
+  );
+  const [amount, setAmount] = useState(
+    isEditForm ? recordToEditInState.amount : ""
+  );
+  const [type, setType] = useState(
+    isEditForm ? recordToEditInState.type : "expense"
+  );
 
   return (
     <div className="page-transaction-form">
-      <h2>Add Transaction</h2>
+      <h2>{isEditForm ? "Edit" : "Add"} Transaction</h2>
 
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (isEditForm) {
+            dispatch({
+              type: "transactions/transactionEdited",
+              payload: {
+                type: type,
+                title: title,
+                amount: amount,
+                day: day,
+                id: recordToEditInState.id,
+              },
+            });
+            dispatch({ type: "edition/unselect" });
+          } else {
+            dispatch({
+              type: "transactions/transactionAdded",
+              payload: { type: type, title: title, amount: amount, day: day },
+            });
+          }
 
-          dispatch({
-            type: "transactions/transactionAdded",
-            payload: { type: type, title: title, amount: amount, day: day },
-          });
           navigate("/transactions");
         }}
       >
@@ -92,6 +115,7 @@ export const PageTransactionForm = () => {
             <button
               className="btn-cancel"
               onClick={() => {
+                if (isEditForm) dispatch({ type: "edition/unselect" });
                 navigate("/transactions");
               }}
             >

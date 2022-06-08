@@ -24,7 +24,7 @@ export default function transactionsReducer(state = INITIAL_STATE, action) {
 
     case "transactions/transactionEdited": {
       return [
-        state.map((transaction) => {
+        ...state.map((transaction) => {
           if (transaction.id !== action.payload.id) {
             return transaction;
           } else {
