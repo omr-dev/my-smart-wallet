@@ -6,6 +6,7 @@ import {deleteTransaction} from '../features/transactions/transactionsSlice'
 
 export const TransactionsList = () => {
   const transactionsInState = useSelector((state) => state.transactions);
+  const balance=getBalance(transactionsInState);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
