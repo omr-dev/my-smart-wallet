@@ -12,6 +12,12 @@ body {
   color: #ccc;
   padding: 10px;
   font-size: 1.6rem;
+  .greenText {
+    color: green;
+  }
+  .redText {
+    color: red;
+  }
   .App {
     width: 80%;
     margin: 0 auto;
@@ -84,7 +90,7 @@ body {
             td {
               text-align: center;
               padding: 5px;
-              &.amountCell{
+              &.amountCell {
                 text-align: right;
               }
               &.redText {
