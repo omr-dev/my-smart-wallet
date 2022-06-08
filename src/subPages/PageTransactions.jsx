@@ -1,19 +1,24 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { FaSpinner } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
 import { TransactionsList } from "../components/TransactionsList";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import {fetchTransactions} from '../features/transactions/transactionsSlice'
 import axios from "axios";
 
 export const PageTransactions = () => {
+  const dispatch = useDispatch();
   const transactionsInState = useSelector((state) => state.transactions);
   let countOfTransactions = transactionsInState.length;
 
   
   //DB
+  useEffect(() => {
+    dispatch(fetchTransactions);
+  },[]);
 
   //TODO:add in redux
   // useEffect(() => {

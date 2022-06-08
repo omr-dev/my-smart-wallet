@@ -1,6 +1,8 @@
 //TODO: use shallowEqual for performance reasons
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {deleteTransaction} from '../features/transactions/transactionsSlice'
+
 
 export const TransactionsList = () => {
   const transactionsInState = useSelector((state) => state.transactions);
@@ -55,10 +57,8 @@ export const TransactionsList = () => {
                   <button
                     onClick={() => {
                       if (confirm(`Are you sure you want to delete ${title} ?`))
-                        dispatch({
-                          type: "transactions/transactionDeleted",
-                          payload: id,
-                        });
+                        dispatch(deleteTransaction(id))
+                        
                     }}
                   >
                     DELETE

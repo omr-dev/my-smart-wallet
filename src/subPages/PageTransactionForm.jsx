@@ -3,6 +3,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
+import {
+  saveTransaction,
+  editTransaction,
+} from "../features/transactions/transactionsSlice";
+
 export const PageTransactionForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,22 +34,29 @@ export const PageTransactionForm = () => {
         onSubmit={(e) => {
           e.preventDefault();
           if (isEditForm) {
-            dispatch({
-              type: "transactions/transactionEdited",
-              payload: {
+            dispatch(
+              editTransaction({
                 type: type,
                 title: title,
                 amount: amount,
                 day: day,
                 id: recordToEditInState.id,
-              },
-            });
+              })
+            );
+
             dispatch({ type: "edition/unselect" });
           } else {
-            dispatch({
-              type: "transactions/transactionAdded",
-              payload: { type: type, title: title, amount: amount, day: day },
+            const saveNewTransactionThunk = saveTransaction({
+              type: type,
+              title: title,
+              amount: amount,
+              day: day,
             });
+            dispatch(saveNewTransactionThunk);
+            // dispatch({
+            //   type: "transactions/transactionAdded",
+            //   payload: { type: type, title: title, amount: amount, day: day },
+            // });
           }
 
           navigate("/transactions");
