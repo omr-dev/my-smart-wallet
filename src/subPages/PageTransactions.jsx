@@ -5,13 +5,39 @@ import { useSelector } from "react-redux";
 
 import { TransactionsList } from "../components/TransactionsList";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
+import axios from "axios";
 
 export const PageTransactions = () => {
   const transactionsInState = useSelector((state) => state.transactions);
   let countOfTransactions = transactionsInState.length;
 
- 
+  
+  //DB
+
+  //TODO:add in redux
+  // useEffect(() => {
+  //   const dbUrl = "http://127.0.0.1:3001/data";
+  //   (async () => {
+  //     const transactionsInDb = (await axios.get(dbUrl)).data;
+  //     console.log("transactionsInDb", transactionsInDb);
+  //   })();
+  //   (async () => {
+  //     await axios.post(dbUrl,{type: 'income', title: 'maas', amount: 5000, day: 12})
+  //     .then((response)=>{console.log('27-responseJSON-SERVER',response);})
+  //     .catch((error)=>{console.error(error);})
+  //   })();
+  //   (async () => {
+  //     await axios.put((dbUrl+'/7'),{type: 'income', title: 'maas', amount: 105000, day: 18})
+  //     .then((response)=>{console.log('32-responseJSON-SERVER',response);})
+  //     .catch((error)=>{console.error(error);})
+  //   })();
+  //   (async()=>{
+  //     await axios.delete((dbUrl+'/6'))
+  //     .then((response)=>{console.log('37-responseJSON-SERVER',response);})
+  //     .catch((error)=>{console.error(error);})
+  //   })()
+  // }, []);
 
   const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useAuth0();
@@ -32,7 +58,11 @@ export const PageTransactions = () => {
             Add Transaction
           </button>
 
-          {countOfTransactions > 0 ? <TransactionsList />:<p>There are no transactions.</p>}
+          {countOfTransactions > 0 ? (
+            <TransactionsList />
+          ) : (
+            <p>There are no transactions.</p>
+          )}
         </div>
       );
     }
@@ -44,7 +74,3 @@ export const PageTransactions = () => {
     );
   }
 };
-
-
-
-
