@@ -1,14 +1,12 @@
+//TODO: use shallowEqual for performance reasons
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  getTransactions,
-  markTransactionToEdit,
-  deleteTransaction,
-} from "../store/features/transactions/transactionsSlice";
+import {deleteTransaction} from '../features/transactions/transactionsSlice'
+
 
 export const TransactionsList = () => {
-  const transactionsInState = useSelector(getTransactions);
-  const balance = getBalance(transactionsInState);
+  const transactionsInState = useSelector((state) => state.transactions);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -31,14 +29,15 @@ export const TransactionsList = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(transactionsInState).map((transactionKey) => {
-            const title = transactionsInState[transactionKey].title;
-            const day = transactionsInState[transactionKey].day;
-            const amount = transactionsInState[transactionKey].amount;
-            const type = transactionsInState[transactionKey].type;
+          {transactionsInState.map((transaction) => {
+            const title = transaction.title;
+            const day = transaction.day;
+            const amount = transaction.amount;
+            const type = transaction.type;
+            const id = transaction.id;
 
             return (
-              <tr key={transactionKey}>
+              <tr key={id}>
                 <td>{day}</td>
                 <td>{title}</td>
                 <td
@@ -52,7 +51,11 @@ export const TransactionsList = () => {
                 <td>
                   <button
                     onClick={() => {
-                      dispatch(markTransactionToEdit(transactionKey));
+                      //TODO: create editable form
+                      dispatch({
+                        type: "edition/selectToEdit",
+                        payload: transaction,
+                      });
                       navigate("/transactionForm");
                     }}
                   >
@@ -61,7 +64,8 @@ export const TransactionsList = () => {
                   <button
                     onClick={() => {
                       if (confirm(`Are you sure you want to delete ${title} ?`))
-                        dispatch(deleteTransaction(transactionKey));
+                        dispatch(deleteTransaction(id))
+                        
                     }}
                   >
                     DELETE

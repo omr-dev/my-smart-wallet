@@ -1,36 +1,30 @@
 import { useState } from "react";
-import {
-  addTransaction,
-  editTransaction,
-} from "../store/features/transactions/transactionsSlice";
+
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
-  getTransactions,
-  getMarkedTransactionToEdit,
-  markTransactionToEdit,
-} from "../store/features/transactions/transactionsSlice";
+  saveTransaction,
+  editTransaction,
+} from "../features/transactions/transactionsSlice";
 
 export const PageTransactionForm = () => {
-  let isEditForm = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const recordToEditInState = useSelector((state) => state.transactionToEdit);
+  const isEditForm = recordToEditInState.hasRecordToEdit;
+  console.log("isEditForm", isEditForm);
 
-  const transactionsInState = useSelector(getTransactions);
-  const transactionToEdit = useSelector(getMarkedTransactionToEdit);
-  let titleToEdit, dayToEdit, amountToEdit, typeToEdit;
-  if (transactionToEdit !== null) {
-    isEditForm = true;
-    titleToEdit = transactionsInState[transactionToEdit].title;
-    dayToEdit = transactionsInState[transactionToEdit].day;
-    amountToEdit = transactionsInState[transactionToEdit].amount;
-    typeToEdit = transactionsInState[transactionToEdit].type;
-  }
-  const [day, setDay] = useState(dayToEdit ? dayToEdit : "");
-  const [title, setTitle] = useState(titleToEdit ? titleToEdit : "");
-  const [amount, setAmount] = useState(amountToEdit ? amountToEdit : "");
-  const [type, setType] = useState(typeToEdit ? typeToEdit : "expense");
+  const [day, setDay] = useState(isEditForm ? recordToEditInState.day : "");
+  const [title, setTitle] = useState(
+    isEditForm ? recordToEditInState.title : ""
+  );
+  const [amount, setAmount] = useState(
+    isEditForm ? recordToEditInState.amount : ""
+  );
+  const [type, setType] = useState(
+    isEditForm ? recordToEditInState.type : "expense"
+  );
 
   return (
     <div className="page-transaction-form">
@@ -42,26 +36,29 @@ export const PageTransactionForm = () => {
           if (isEditForm) {
             dispatch(
               editTransaction({
-                targetId: transactionToEdit,
-                newValue: {
-                  type: type,
-                  title: title,
-                  amount: amount,
-                  day: day,
-                },
-              })
-            );
-            dispatch(markTransactionToEdit(null));
-          } else {
-            dispatch(
-              addTransaction({
                 type: type,
                 title: title,
                 amount: amount,
                 day: day,
+                id: recordToEditInState.id,
               })
             );
+
+            dispatch({ type: "edition/unselect" });
+          } else {
+            const saveNewTransactionThunk = saveTransaction({
+              type: type,
+              title: title,
+              amount: amount,
+              day: day,
+            });
+            dispatch(saveNewTransactionThunk);
+            // dispatch({
+            //   type: "transactions/transactionAdded",
+            //   payload: { type: type, title: title, amount: amount, day: day },
+            // });
           }
+
           navigate("/transactions");
         }}
       >
@@ -130,9 +127,7 @@ export const PageTransactionForm = () => {
             <button
               className="btn-cancel"
               onClick={() => {
-                if (isEditForm) {
-                  dispatch(markTransactionToEdit(null));
-                }
+                if (isEditForm) dispatch({ type: "edition/unselect" });
                 navigate("/transactions");
               }}
             >
