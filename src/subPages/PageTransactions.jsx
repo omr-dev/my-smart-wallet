@@ -20,29 +20,7 @@ export const PageTransactions = () => {
     dispatch(fetchTransactions);
   },[]);
 
-  //TODO:add in redux
-  // useEffect(() => {
-  //   const dbUrl = "http://127.0.0.1:3001/data";
-  //   (async () => {
-  //     const transactionsInDb = (await axios.get(dbUrl)).data;
-  //     console.log("transactionsInDb", transactionsInDb);
-  //   })();
-  //   (async () => {
-  //     await axios.post(dbUrl,{type: 'income', title: 'maas', amount: 5000, day: 12})
-  //     .then((response)=>{console.log('27-responseJSON-SERVER',response);})
-  //     .catch((error)=>{console.error(error);})
-  //   })();
-  //   (async () => {
-  //     await axios.put((dbUrl+'/7'),{type: 'income', title: 'maas', amount: 105000, day: 18})
-  //     .then((response)=>{console.log('32-responseJSON-SERVER',response);})
-  //     .catch((error)=>{console.error(error);})
-  //   })();
-  //   (async()=>{
-  //     await axios.delete((dbUrl+'/6'))
-  //     .then((response)=>{console.log('37-responseJSON-SERVER',response);})
-  //     .catch((error)=>{console.error(error);})
-  //   })()
-  // }, []);
+
 
   const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useAuth0();
@@ -52,8 +30,7 @@ export const PageTransactions = () => {
     } else {
       return (
         <div className="pageTransactions subPage">
-          <h2>This is transactions page.</h2>
-
+         
           <button
             className="btn-add-transaction"
             onClick={() => {

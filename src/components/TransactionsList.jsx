@@ -13,7 +13,7 @@ export const TransactionsList = () => {
 
   return (
     <div className="transactionsList">
-      <h3>
+      <h3 className='title-balance'>
         Balance :{" "}
         <span className={balance > 0 ? "greenText" : "redText"}>
           {balance > 0 && "+"}
@@ -49,7 +49,7 @@ export const TransactionsList = () => {
                   {type === "expense" ? "- " : "+ "}
                   {amount} €
                 </td>
-                <td>
+                <td className="buttons-cell">
                   <button
                     onClick={() => {
                       //TODO: create editable form
